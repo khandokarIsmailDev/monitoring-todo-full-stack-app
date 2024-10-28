@@ -4,9 +4,11 @@ import Todo from "./Todo";
 import OnProgress from "./OnProgress";
 import Done from "./Done";
 import Revised from "./Revised";
+import Modal from "./Modal";
 import { TodoContext } from "../../context";
 
 export default function TodoBoard() {
+  const [showModal, setShowModal] = useState(true);
   const { todoAll, setTodoAll } = useContext(TodoContext);
   const [todoList, setTodoList] = useState({
     todo: [],
@@ -37,14 +39,17 @@ export default function TodoBoard() {
   console.log("this is todoList", todoList);
   console.log("this is todoAll for context", todoAll);
   return (
-    <div className="mx-auto max-w-7xl p-6">
-      <TodoAdd />
-      <div className="-mx-2 mb-6 flex flex-wrap">
-        <Todo tasks={todoList.todo} />
-        <OnProgress tasks ={todoList.inprogress} />
-        <Done tasks={todoList.done} />
-        <Revised tasks={todoList.revised} />
+    <>
+      {showModal && <Modal />}
+      <div className="mx-auto max-w-7xl p-6">
+        <TodoAdd />
+        <div className="-mx-2 mb-6 flex flex-wrap">
+          <Todo tasks={todoList.todo} />
+          <OnProgress tasks={todoList.inprogress} />
+          <Done tasks={todoList.done} />
+          <Revised tasks={todoList.revised} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

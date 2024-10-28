@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
-import { ModalContext } from "../../context";
+import React, { useState } from "react";
 
 export default function Modal() {
-  const { setShowModal } = useContext(ModalContext);
+
   const [task, setTask] = useState({
     taskName: "",
     description: "",
@@ -11,7 +10,7 @@ export default function Modal() {
   });
 
   function handleCloseModal() {
-    setShowModal(false);
+    // setShowModal(false);
   }
 
   function handleChange(e) {
@@ -26,13 +25,13 @@ export default function Modal() {
 
   function handleSubmit(e){
     e.preventDefault();
-    setShowModal(false);
+    // setShowModal(false);
   }
 
   console.log(task);
 
   return (
-    <div className="w-full h-screen  absolute flex justify-center items-center  bg-black bg-opacity-50">
+    <div className="w-full h-screen  absolute flex top-0 left-0 justify-center items-center  bg-black bg-opacity-50">
       <div className="w-full  max-w-md rounded-lg bg-gray-800 shadow-xl ">
         <div className="p-6">
           <h2 className="mb-6 text-2xl font-bold text-green-400">
