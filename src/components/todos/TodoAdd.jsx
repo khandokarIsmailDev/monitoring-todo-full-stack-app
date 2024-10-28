@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
+import Modal from "./Modal";
+import { ModalContext } from "../../context";
 
 export default function TodoAdd() {
+
+  const { showModal, setShowModal } = useContext(ModalContext);
+
+  function handleShowModal() {
+    setShowModal(!showModal);
+  }
+
   return (
+
+    <>
     <div className="mb-6 flex items-center justify-between">
       <h2 className="text-2xl font-bold">Projectify</h2>
       <div className="flex space-x-2">
-        <button className="flex items-center rounded-md bg-gray-700 px-4 py-2 text-white">
+        <button
+          onClick={handleShowModal}
+        className="flex items-center rounded-md bg-gray-700 px-4 py-2 text-white">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width={24}
@@ -27,5 +40,6 @@ export default function TodoAdd() {
         </button>
       </div>
     </div>
+    </>
   );
 }
