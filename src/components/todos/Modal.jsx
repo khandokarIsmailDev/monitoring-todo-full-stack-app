@@ -3,11 +3,33 @@ import { ModalContext } from "../../context";
 
 export default function Modal() {
   const { setShowModal } = useContext(ModalContext);
-  const [task, setTask] = useState({});
+  const [task, setTask] = useState({
+    taskName: "",
+    description: "",
+    dueDate: new Date(),
+    category: "",
+  });
 
   function handleCloseModal() {
     setShowModal(false);
   }
+
+  function handleChange(e) {
+    let name = e.target.name;
+    let value = e.target.value;
+    console.log(name, value);
+    setTask({
+      ...task,
+      [name]: value
+    })
+  }
+
+  function handleSubmit(e){
+    e.preventDefault();
+    setShowModal(false);
+  }
+
+  console.log(task);
 
   return (
     <div className="w-full h-screen  absolute flex justify-center items-center  bg-black bg-opacity-50">
@@ -29,6 +51,7 @@ export default function Modal() {
                 id="taskName"
                 name="taskName"
                 required=""
+                onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -43,6 +66,7 @@ export default function Modal() {
                 id="description"
                 name="description"
                 rows={3}
+                onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                 defaultValue={""}
               />
@@ -58,6 +82,7 @@ export default function Modal() {
                 type="date"
                 id="dueDate"
                 name="dueDate"
+                onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
@@ -71,6 +96,7 @@ export default function Modal() {
               <select
                 id="category"
                 name="category"
+                onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="todo">To-Do</option>
@@ -90,6 +116,7 @@ export default function Modal() {
               <button
                 type="submit"
                 className="rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
+                onClick={(e) => handleSubmit(e)}
               >
                 Create Task
               </button>
