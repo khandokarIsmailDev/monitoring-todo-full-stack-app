@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 
-export default function Revised({ tasks,onDeleteTask }) {
+export default function Revised({ tasks,onDeleteTask,onEditTask }) {
 
   const [sortTask,setSortTask] = useState([])
 
@@ -62,6 +62,7 @@ export default function Revised({ tasks,onDeleteTask }) {
                   <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                 </svg>
                 <svg
+                  onClick={() => onEditTask(task)}
                   className="h-4 w-4 cursor-pointer text-zinc-300"
                   fill="none"
                   stroke="currentColor"

@@ -1,15 +1,6 @@
 import React, { useState,useContext } from "react";
 import { TodoContext } from "../../context";
 
-// // Utility function to format date to DD-MM-YYYY
-// function formatDateToDDMMYYYY(dateString) {
-//   const date = new Date(dateString);
-//   const day = String(date.getDate()).padStart(2, '0');
-//   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-//   const year = date.getFullYear();
-//   return `${day}-${month}-${year}`;
-// }
-
 
 export default function Modal({onShowModal,editTask}) {
 
@@ -74,7 +65,7 @@ function formatDateToYYYYMMDD(dateString) {
       <div className="w-full  max-w-md rounded-lg bg-gray-800 shadow-xl ">
         <div className="p-6">
           <h2 className="mb-6 text-2xl font-bold text-green-400">
-            Create Task
+            {editTask ? "Edit Task" : "Create Task"}
           </h2>
           <form>
             <div className="mb-4">
@@ -139,6 +130,7 @@ function formatDateToYYYYMMDD(dateString) {
                 id="category"
                 name="category"
                 onChange={(e) => handleChange(e)}
+                defaultValue={editTask?.category}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="todo">To-Do</option>
@@ -160,7 +152,7 @@ function formatDateToYYYYMMDD(dateString) {
                 className="rounded-md border border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-800"
                 onClick={(e) => handleSubmit(e)}
               >
-                Create Task
+                {editTask ? "Update Task" : "Create Task"}
               </button>
             </div>
           </form>

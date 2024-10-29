@@ -18,7 +18,7 @@ export default function TodoBoard() {
   });
 
   //for edit task
-  const [editTask, setEditTask] = useState(null)
+  const [editTask, setEditTask] = useState(null);
 
   useEffect(() => {
     const categoriyTask = {
@@ -39,14 +39,14 @@ export default function TodoBoard() {
     setTodoList(categoriyTask);
   }, [todoAll]);
 
-  function handleDeleteTask(taskId){
-    const deleteTodo = todoAll.filter(task => task.id !== taskId)
-    setTodoAll(deleteTodo)
+  function handleDeleteTask(taskId) {
+    const deleteTodo = todoAll.filter((task) => task.id !== taskId);
+    setTodoAll(deleteTodo);
   }
 
-  function handleEditTask(task){
-    setShowModal(true)
-    setEditTask(task)
+  function handleEditTask(task) {
+    setShowModal(true);
+    setEditTask(task);
   }
 
   // console.log("this is todoList", todoList);
@@ -57,14 +57,43 @@ export default function TodoBoard() {
       <div className="mx-auto max-w-7xl p-6">
         <TodoAdd onShowModal={setShowModal} />
         <div className="-mx-2 mb-6 flex flex-wrap">
-          {todoList.todo.length === 0 && todoList.inprogress.length === 0 && todoList.done.length === 0 && todoList.revised.length === 0 ? (
-            <p className="text-center text-3xl font-bold  text-zinc-400 mx-auto">Task List is empty!</p>
+          {todoList.todo.length === 0 &&
+          todoList.inprogress.length === 0 &&
+          todoList.done.length === 0 &&
+          todoList.revised.length === 0 ? (
+            <p className="text-center text-3xl font-bold  text-zinc-400 mx-auto">
+              Task List is empty!
+            </p>
           ) : (
             <>
-              {todoList.todo.length > 0 && <Todo tasks={todoList.todo} onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} />}
-              {todoList.inprogress.length > 0 && <OnProgress tasks={todoList.inprogress} onDeleteTask={handleDeleteTask} />}
-              {todoList.done.length > 0 && <Done tasks={todoList.done} onDeleteTask={handleDeleteTask} />}
-              {todoList.revised.length > 0 && <Revised tasks={todoList.revised} onDeleteTask={handleDeleteTask} />}
+              {todoList.todo.length > 0 && (
+                <Todo
+                  tasks={todoList.todo}
+                  onDeleteTask={handleDeleteTask}
+                  onEditTask={handleEditTask}
+                />
+              )}
+              {todoList.inprogress.length > 0 && (
+                <OnProgress
+                  tasks={todoList.inprogress}
+                  onDeleteTask={handleDeleteTask}
+                  onEditTask={handleEditTask}
+                />
+              )}
+              {todoList.done.length > 0 && (
+                <Done
+                  tasks={todoList.done}
+                  onDeleteTask={handleDeleteTask}
+                  onEditTask={handleEditTask}
+                />
+              )}
+              {todoList.revised.length > 0 && (
+                <Revised
+                  tasks={todoList.revised}
+                  onDeleteTask={handleDeleteTask}
+                  onEditTask={handleEditTask}
+                />
+              )}
             </>
           )}
         </div>
