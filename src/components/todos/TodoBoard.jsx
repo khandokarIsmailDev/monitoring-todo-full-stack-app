@@ -53,7 +53,7 @@ export default function TodoBoard() {
   // console.log("this is todoAll for context", todoAll);
   return (
     <>
-      {showModal && <Modal onShowModal={setShowModal} editTask={editTask} />}
+      {showModal && <Modal onShowModal={setShowModal} editTask={editTask} setEditTask={setEditTask} />}
       <div className="mx-auto max-w-7xl p-6">
         <TodoAdd onShowModal={setShowModal} />
         <div className="-mx-2 mb-6 flex flex-wrap">

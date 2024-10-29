@@ -1,8 +1,9 @@
 import React, { useState,useContext } from "react";
 import { TodoContext } from "../../context";
+import { formatDateToYYYYMMDD } from "../../utils/timeFormat";
 
 
-export default function Modal({onShowModal,editTask}) {
+export default function Modal({onShowModal,editTask,setEditTask}) {
 
   const {todoAll,setTodoAll} = useContext(TodoContext);
 
@@ -15,18 +16,11 @@ export default function Modal({onShowModal,editTask}) {
   });
 
 
-  // Utility function to format date to YYYY-MM-DD for input
-function formatDateToYYYYMMDD(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
 
 
 
   function handleCloseModal() {
+    setEditTask(null);
     onShowModal(false);
   }
 
@@ -54,6 +48,7 @@ function formatDateToYYYYMMDD(dateString) {
     }else{
       setTodoAll([...todoAll,task])
     }
+    setEditTask(null);
     onShowModal(false);
   }
 
