@@ -6,6 +6,7 @@ export default function Modal({onShowModal}) {
   const {todoAll,setTodoAll} = useContext(TodoContext);
 
   const [task, setTask] = useState({
+    id:crypto.randomUUID(),
     taskName: "",
     description: "",
     dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),

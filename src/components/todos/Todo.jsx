@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Todo({ tasks }) {
-  //for checking the task
-  console.log("this is a task todo", );
+  
+  const [sortTask,setSortTask] = useState([])
+
+  useEffect(()=>{
+    const sortedTask = [...tasks].sort((a,b) => new Date(b.dueDate) - new Date(a.dueDate))
+    setSortTask(sortedTask)
+  },[tasks])
 
   return (
     <div className="mb-4 w-full px-2 sm:w-1/2 md:w-1/4">
@@ -30,7 +35,7 @@ export default function Todo({ tasks }) {
           </svg>
         </div>
         <div>
-          {tasks?.map((task) => (
+          {sortTask?.map((task) => (
             <div key={task.id+task.taskName} className="mb-4 rounded-lg bg-gray-800 p-4">
               <div className="flex justify-between">
                 <h4 className="mb-2 flex-1 font-semibold text-indigo-500">
