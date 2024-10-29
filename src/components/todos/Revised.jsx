@@ -1,6 +1,14 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 
 export default function Revised({ tasks }) {
+
+  const [sortTask,setSortTask] = useState([])
+
+  useEffect(()=>{
+    const sortedTask = [...tasks].sort((a,b) => new Date(b.dueDate) - new Date(a.dueDate))
+    setSortTask(sortedTask)
+  },[tasks])
+
   return (
     <div className="mb-4 w-full px-2 sm:w-1/2 md:w-1/4">
       <div className="rounded-lg bg-rose-500 p-4">
@@ -26,7 +34,7 @@ export default function Revised({ tasks }) {
             <path d="M18 6l0 12" />
           </svg>
         </div>
-        {tasks?.map((task) => (
+        {sortTask?.map((task) => (
           <div key={task.id+task.taskName} className="mb-4 rounded-lg bg-gray-800 p-4">
             <div className="flex justify-between">
               <h4 className="mb-2 font-semibold text-rose-500">

@@ -26,7 +26,7 @@ export default function Modal({onShowModal}) {
       value = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     }
 
-    console.log(name, value);
+    // console.log(name, value);
     setTask({
       ...task,
       [name]: value
