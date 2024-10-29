@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from "react";
 
-export default function OnProgress({ tasks }) {
+export default function OnProgress({ tasks,onDeleteTask }) {
 
   const [sortTask,setSortTask] = useState([])
 
@@ -44,6 +44,7 @@ export default function OnProgress({ tasks }) {
               </h4>
               <div className="flex gap-2">
                 <svg
+                  onClick={() => onDeleteTask(task.id)}
                   xmlns="http://www.w3.org/2000/svg"
                   width={24}
                   height={24}
