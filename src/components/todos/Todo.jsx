@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function Todo({ tasks, onDeleteTask }) {
+export default function Todo({ tasks, onDeleteTask,onEditTask }) {
   const [sortTask, setSortTask] = useState([]);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ export default function Todo({ tasks, onDeleteTask }) {
                       <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
                     </svg>
                   </div>
-                  <div>
+                  <div onClick={() => onEditTask(task)}>
                     <svg
                       className="h-4 w-4 cursor-pointer text-zinc-300"
                       fill="none"

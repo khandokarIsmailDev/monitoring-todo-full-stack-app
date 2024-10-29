@@ -17,6 +17,9 @@ export default function TodoBoard() {
     revised: [],
   });
 
+  //for edit task
+  const [editTask, setEditTask] = useState(null)
+
   useEffect(() => {
     const categoriyTask = {
       todo: [],
@@ -41,11 +44,16 @@ export default function TodoBoard() {
     setTodoAll(deleteTodo)
   }
 
+  function handleEditTask(task){
+    setShowModal(true)
+    setEditTask(task)
+  }
+
   // console.log("this is todoList", todoList);
   // console.log("this is todoAll for context", todoAll);
   return (
     <>
-      {showModal && <Modal onShowModal={setShowModal} />}
+      {showModal && <Modal onShowModal={setShowModal} editTask={editTask} />}
       <div className="mx-auto max-w-7xl p-6">
         <TodoAdd onShowModal={setShowModal} />
         <div className="-mx-2 mb-6 flex flex-wrap">
@@ -53,7 +61,7 @@ export default function TodoBoard() {
             <p className="text-center text-3xl font-bold  text-zinc-400 mx-auto">Task List is empty!</p>
           ) : (
             <>
-              {todoList.todo.length > 0 && <Todo tasks={todoList.todo} onDeleteTask={handleDeleteTask} />}
+              {todoList.todo.length > 0 && <Todo tasks={todoList.todo} onDeleteTask={handleDeleteTask} onEditTask={handleEditTask} />}
               {todoList.inprogress.length > 0 && <OnProgress tasks={todoList.inprogress} onDeleteTask={handleDeleteTask} />}
               {todoList.done.length > 0 && <Done tasks={todoList.done} onDeleteTask={handleDeleteTask} />}
               {todoList.revised.length > 0 && <Revised tasks={todoList.revised} onDeleteTask={handleDeleteTask} />}

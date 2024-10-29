@@ -1,17 +1,39 @@
 import React, { useState,useContext } from "react";
 import { TodoContext } from "../../context";
 
-export default function Modal({onShowModal}) {
+// // Utility function to format date to DD-MM-YYYY
+// function formatDateToDDMMYYYY(dateString) {
+//   const date = new Date(dateString);
+//   const day = String(date.getDate()).padStart(2, '0');
+//   const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+//   const year = date.getFullYear();
+//   return `${day}-${month}-${year}`;
+// }
+
+
+export default function Modal({onShowModal,editTask}) {
 
   const {todoAll,setTodoAll} = useContext(TodoContext);
 
-  const [task, setTask] = useState({
+  const [task, setTask] = useState(editTask || {
     id:crypto.randomUUID(),
     taskName: "",
     description: "",
     dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     category: "todo",
   });
+
+
+  // Utility function to format date to YYYY-MM-DD for input
+function formatDateToYYYYMMDD(dateString) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+
 
   function handleCloseModal() {
     onShowModal(false);
@@ -35,7 +57,12 @@ export default function Modal({onShowModal}) {
 
   function handleSubmit(e){
     e.preventDefault();
-    setTodoAll([...todoAll,task])
+    if(editTask){
+      const updatedTasks = todoAll.map(todo => todo.id === editTask.id ? task : todo);
+      setTodoAll(updatedTasks);
+    }else{
+      setTodoAll([...todoAll,task])
+    }
     onShowModal(false);
   }
 
@@ -62,6 +89,7 @@ export default function Modal({onShowModal}) {
                 id="taskName"
                 name="taskName"
                 required=""
+                defaultValue={editTask?.taskName}
                 onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
@@ -77,9 +105,10 @@ export default function Modal({onShowModal}) {
                 id="description"
                 name="description"
                 rows={3}
+                defaultValue={editTask?.description}
                 onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white placeholder-gray-400 shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
-                defaultValue={""}
+                
               />
             </div>
             <div className="mb-4">
@@ -94,6 +123,7 @@ export default function Modal({onShowModal}) {
                 id="dueDate"
                 name="dueDate"
                 min={new Date().toISOString().split("T")[0]}
+                defaultValue={editTask ? formatDateToYYYYMMDD(editTask.dueDate) : ""}
                 onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
