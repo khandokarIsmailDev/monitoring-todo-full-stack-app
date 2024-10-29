@@ -27,7 +27,7 @@ export default function Revised({ tasks }) {
           </svg>
         </div>
         {tasks?.map((task) => (
-          <div key={task.id} className="mb-4 rounded-lg bg-gray-800 p-4">
+          <div key={task.id+task.taskName} className="mb-4 rounded-lg bg-gray-800 p-4">
             <div className="flex justify-between">
               <h4 className="mb-2 font-semibold text-rose-500">
                 {task.taskName.toUpperCase()}
