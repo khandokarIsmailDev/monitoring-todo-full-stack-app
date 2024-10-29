@@ -8,7 +8,7 @@ import Modal from "./Modal";
 import { TodoContext } from "../../context";
 
 export default function TodoBoard() {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const { todoAll, setTodoAll } = useContext(TodoContext);
   const [todoList, setTodoList] = useState({
     todo: [],
@@ -40,9 +40,9 @@ export default function TodoBoard() {
   console.log("this is todoAll for context", todoAll);
   return (
     <>
-      {showModal && <Modal />}
+      {showModal && <Modal onShowModal={setShowModal} />}
       <div className="mx-auto max-w-7xl p-6">
-        <TodoAdd />
+        <TodoAdd onShowModal={setShowModal} />
         <div className="-mx-2 mb-6 flex flex-wrap">
           <Todo tasks={todoList.todo} />
           <OnProgress tasks={todoList.inprogress} />

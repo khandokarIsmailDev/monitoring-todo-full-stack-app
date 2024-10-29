@@ -1,34 +1,40 @@
 import React, { useState } from "react";
 
-export default function Modal() {
+export default function Modal({onShowModal}) {
 
   const [task, setTask] = useState({
     taskName: "",
     description: "",
-    dueDate: new Date(),
-    category: "",
+    dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+    category: "todo",
   });
 
   function handleCloseModal() {
-    // setShowModal(false);
+    onShowModal(false);
   }
 
   function handleChange(e) {
     let name = e.target.name;
     let value = e.target.value;
+
+    if (name === "dueDate") {
+      const date = new Date(value);
+      value = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
     console.log(name, value);
     setTask({
       ...task,
       [name]: value
-    })
+    });
   }
 
   function handleSubmit(e){
     e.preventDefault();
-    // setShowModal(false);
+    onShowModal(false);
   }
 
-  console.log(task);
+  console.log('this is task from modal', task);
 
   return (
     <div className="w-full h-screen  absolute flex top-0 left-0 justify-center items-center  bg-black bg-opacity-50">
