@@ -92,6 +92,7 @@ export default function Modal({onShowModal}) {
                 type="date"
                 id="dueDate"
                 name="dueDate"
+                min={new Date().toISOString().split("T")[0]}
                 onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
