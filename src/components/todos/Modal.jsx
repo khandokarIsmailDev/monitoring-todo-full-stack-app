@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { TodoContext } from "../../context";
 
 export default function Modal({onShowModal}) {
+
+  const {todoAll,setTodoAll} = useContext(TodoContext);
 
   const [task, setTask] = useState({
     taskName: "",
@@ -31,10 +34,12 @@ export default function Modal({onShowModal}) {
 
   function handleSubmit(e){
     e.preventDefault();
+    setTodoAll([...todoAll,task])
     onShowModal(false);
   }
 
   console.log('this is task from modal', task);
+  console.log('this is todoAll from modal', todoAll);
 
   return (
     <div className="w-full h-screen  absolute flex top-0 left-0 justify-center items-center  bg-black bg-opacity-50">
