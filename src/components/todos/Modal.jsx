@@ -42,6 +42,13 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
 
   function handleSubmit(e){
     e.preventDefault();
+    
+    // Validation: Check if any field is empty
+    if (!task.taskName || !task.description || !task.dueDate || !task.category) {
+        alert("Please fill in all fields.");
+        return; // Exit the function if validation fails
+    }
+
     if(editTask){
       const updatedTasks = todoAll.map(todo => todo.id === editTask.id ? task : todo);
       setTodoAll(updatedTasks);
@@ -109,7 +116,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
                 id="dueDate"
                 name="dueDate"
                 min={new Date().toISOString().split("T")[0]}
-                defaultValue={editTask ? formatDateToYYYYMMDD(editTask.dueDate) : ""}
+                defaultValue={editTask ? formatDateToYYYYMMDD(editTask.dueDate) : new Date().toLocaleDateString('en-GB').split('/').reverse().join('-')}
                 onChange={(e) => handleChange(e)}
                 className="w-full rounded-md border border-gray-600 bg-gray-700 px-3 py-2 text-white shadow-sm focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
