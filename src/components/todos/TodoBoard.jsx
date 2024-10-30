@@ -5,11 +5,13 @@ import OnProgress from "./OnProgress";
 import Done from "./Done";
 import Revised from "./Revised";
 import Modal from "./Modal";
-import { TodoContext } from "../../context";
+import { TodoContext,SearchContext } from "../../context";
 
 export default function TodoBoard() {
   const [showModal, setShowModal] = useState(false);
   const { todoAll, setTodoAll } = useContext(TodoContext);
+  const {search} = useContext(SearchContext);
+  
   const [todoList, setTodoList] = useState({
     todo: [],
     inprogress: [],
@@ -28,7 +30,15 @@ export default function TodoBoard() {
       revised: [],
     };
 
-    todoAll.forEach((task) => {
+    // Ensure search is a string before using toLowerCase
+    const searchTerm = typeof search === 'string' ? search.toLowerCase() : '';
+
+    // Filter tasks based on search input
+    const filteredTasks = searchTerm && todoAll.some(task => task.taskName.toLowerCase().includes(searchTerm))
+      ? todoAll.filter(task => task.taskName.toLowerCase().includes(searchTerm))
+      : todoAll;
+
+    filteredTasks.forEach((task) => {
       for (const category of Object.keys(categoriyTask)) {
         if (task.category === category) {
           categoriyTask[category].push(task);
@@ -37,7 +47,7 @@ export default function TodoBoard() {
     });
 
     setTodoList(categoriyTask);
-  }, [todoAll]);
+  }, [todoAll, search]);
 
   function handleDeleteTask(taskId) {
     const deleteTodo = todoAll.filter((task) => task.id !== taskId);

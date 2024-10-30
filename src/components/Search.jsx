@@ -1,30 +1,20 @@
 import React,{useContext,useState} from "react";
-import { TodoContext } from "../context";
+import { TodoContext,SearchContext } from "../context";
 
 export default function Search() {
 
-  const {todoAll,setTodoAll} = useContext(TodoContext);
-  const [search,setSearch] = useState([]);
+  const {todoAll} = useContext(TodoContext);
+  const {search,setSearch} = useContext(SearchContext);
 
   // console.log("todoAll in search",todoAll);
 
-  const [storeTodoAll,setStoreTodoAll] = useState(todoAll);
 
   function handleSearch(e){
     const searchValue = e.target.value;
-    if(searchValue){
-      const filteredTask = todoAll.filter((task)=>task.taskName.toLowerCase().includes(searchValue.toLowerCase()));
-      if (filteredTask.length > 0) {
-        setTodoAll(filteredTask);
-      } else {
-        setTodoAll(storeTodoAll);
-      }
-    }else{
-      setTodoAll(storeTodoAll);
-    }
+    setSearch(searchValue);
   }
 
-  console.log("search",todoAll);
+  console.log("search",search);
 
   return (
     <div className="mx-4 flex-1">
