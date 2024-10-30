@@ -6,7 +6,7 @@ import Done from "./Done";
 import Revised from "./Revised";
 import Modal from "./Modal";
 import { TodoContext,SearchContext } from "../../context";
-
+import { toast } from "react-toastify";
 export default function TodoBoard() {
   const [showModal, setShowModal] = useState(false);
   const { todoAll, setTodoAll } = useContext(TodoContext);
@@ -52,6 +52,7 @@ export default function TodoBoard() {
   function handleDeleteTask(taskId) {
     const deleteTodo = todoAll.filter((task) => task.id !== taskId);
     setTodoAll(deleteTodo);
+    toast.success("Task deleted successfully.");
   }
 
   function handleEditTask(task) {

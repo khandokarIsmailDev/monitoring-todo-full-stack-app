@@ -1,6 +1,7 @@
 import React, { useState,useContext } from "react";
 import { TodoContext } from "../../context";
 import { formatDateToYYYYMMDD } from "../../utils/timeFormat";
+import { toast } from "react-toastify";
 
 
 export default function Modal({onShowModal,editTask,setEditTask}) {
@@ -45,15 +46,17 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
     
     // Validation: Check if any field is empty
     if (!task.taskName || !task.description || !task.dueDate || !task.category) {
-        alert("Please fill in all fields.");
+        toast.error("Please fill in all fields.");
         return; // Exit the function if validation fails
     }
 
     if(editTask){
       const updatedTasks = todoAll.map(todo => todo.id === editTask.id ? task : todo);
       setTodoAll(updatedTasks);
+      toast.success("Task updated successfully.");
     }else{
       setTodoAll([...todoAll,task])
+      toast.success("Task created successfully.");
     }
     setEditTask(null);
     onShowModal(false);
