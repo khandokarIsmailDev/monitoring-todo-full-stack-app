@@ -3,11 +3,30 @@ import React,{useState,useEffect} from "react";
 export default function Revised({ tasks,onDeleteTask,onEditTask }) {
 
   const [sortTask,setSortTask] = useState([])
+  const [intialNumber, setIntialNumber] = useState(0);
 
   useEffect(()=>{
     const sortedTask = [...tasks].sort((a,b) => new Date(b.dueDate) - new Date(a.dueDate))
     setSortTask(sortedTask)
   },[tasks])
+
+  function handleSort() {
+    if (intialNumber === 0) {
+      const sortedTask = [...tasks].sort(
+        (a, b) => new Date(a.dueDate) - new Date(b.dueDate)
+      );
+      setSortTask(sortedTask);
+      setIntialNumber(1);
+    } else {
+      const sortedTask = [...tasks].sort(
+        (a, b) => new Date(b.dueDate) - new Date(a.dueDate)
+      );
+      setSortTask(sortedTask);
+      setIntialNumber(0);
+    }
+
+    console.log("sortedTask", sortTask);
+  }
 
   return (
     <div className="mb-4 w-full px-2 sm:w-1/2 md:w-1/4">
@@ -15,6 +34,7 @@ export default function Revised({ tasks,onDeleteTask,onEditTask }) {
         <div className="mb-2 flex items-center justify-between">
           <h3 className="text-lg font-semibold">Revise ({tasks?.length})</h3>
           <svg
+            onClick={handleSort}
             xmlns="http://www.w3.org/2000/svg"
             width={18}
             height={18}
@@ -24,7 +44,7 @@ export default function Revised({ tasks,onDeleteTask,onEditTask }) {
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-sort-descending"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-sort-descending cursor-pointer"
           >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M4 6l9 0" />
