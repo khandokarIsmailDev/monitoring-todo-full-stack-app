@@ -5,13 +5,14 @@ import OnProgress from "./OnProgress";
 import Done from "./Done";
 import Revised from "./Revised";
 import Modal from "./Modal";
-import { TodoContext,SearchContext } from "../../context";
+import { TodoContext, SearchContext } from "../../context";
 import { toast } from "react-toastify";
+
 export default function TodoBoard() {
   const [showModal, setShowModal] = useState(false);
-  const { todoAll, setTodoAll } = useContext(TodoContext);
-  const {search} = useContext(SearchContext);
-  
+  const { state, dispatch } = useContext(TodoContext);
+  const { search } = useContext(SearchContext);
+
   const [todoList, setTodoList] = useState({
     todo: [],
     inprogress: [],
@@ -31,12 +32,18 @@ export default function TodoBoard() {
     };
 
     // Ensure search is a string before using toLowerCase
-    const searchTerm = typeof search === 'string' ? search.toLowerCase() : '';
+    const searchTerm = typeof search === "string" ? search.toLowerCase() : "";
 
     // Filter tasks based on search input
-    const filteredTasks = searchTerm && todoAll.some(task => task.taskName.toLowerCase().includes(searchTerm))
-      ? todoAll.filter(task => task.taskName.toLowerCase().includes(searchTerm))
-      : todoAll;
+    const filteredTasks =
+      searchTerm &&
+      state.todoAll.some((task) =>
+        task.taskName.toLowerCase().includes(searchTerm)
+      )
+        ? state.todoAll.filter((task) =>
+            task.taskName.toLowerCase().includes(searchTerm)
+          )
+        : state.todoAll;
 
     filteredTasks.forEach((task) => {
       for (const category of Object.keys(categoriyTask)) {
@@ -47,11 +54,11 @@ export default function TodoBoard() {
     });
 
     setTodoList(categoriyTask);
-  }, [todoAll, search]);
+  }, [state.todoAll, search]);
 
   function handleDeleteTask(taskId) {
-    const deleteTodo = todoAll.filter((task) => task.id !== taskId);
-    setTodoAll(deleteTodo);
+    const deleteTodo = state.todoAll.filter((task) => task.id !== taskId);
+    dispatch({ type: "SET_TODO_ALL", payload: deleteTodo });
     toast.success("Task deleted successfully.");
   }
 
@@ -64,7 +71,13 @@ export default function TodoBoard() {
   // console.log("this is todoAll for context", todoAll);
   return (
     <>
-      {showModal && <Modal onShowModal={setShowModal} editTask={editTask} setEditTask={setEditTask} />}
+      {showModal && (
+        <Modal
+          onShowModal={setShowModal}
+          editTask={editTask}
+          setEditTask={setEditTask}
+        />
+      )}
       <div className="mx-auto max-w-7xl p-6">
         <TodoAdd onShowModal={setShowModal} />
         <div className="-mx-2 mb-6 flex flex-wrap">

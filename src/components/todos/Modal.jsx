@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 export default function Modal({onShowModal,editTask,setEditTask}) {
 
-  const {todoAll,setTodoAll} = useContext(TodoContext);
+  const {state,dispatch} = useContext(TodoContext);
 
   const [task, setTask] = useState(editTask || {
     id:crypto.randomUUID(),
@@ -51,11 +51,10 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
     }
 
     if(editTask){
-      const updatedTasks = todoAll.map(todo => todo.id === editTask.id ? task : todo);
-      setTodoAll(updatedTasks);
+      dispatch({type:"EDIT_TASK",payload:task});
       toast.success("Task updated successfully.");
     }else{
-      setTodoAll([...todoAll,task])
+      dispatch({type:"SET_TODO_ALL",payload:[...state.todoAll,task]})
       toast.success("Task created successfully.");
     }
     setEditTask(null);
@@ -63,7 +62,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
   }
 
   console.log('this is task from modal', task);
-  console.log('this is todoAll from modal', todoAll);
+  console.log('this is todoAll from modal', state.todoAll);
 
   return (
     <div className="w-full h-screen  absolute flex top-0 left-0 justify-center items-center  bg-black bg-opacity-50">
