@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import { createTodo } from "./controllers";
 
 dotenv.config();
 
@@ -10,10 +11,14 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
-
-app.get("/", (req, res) => {
-  res.send("Hello World");
+// Routes
+app.get("/health", (req, res) => {
+  res.send("Server is healthy");
 });
+
+app.post("/todos", createTodo)
+
+
 
 const port = process.env.PORT || 3000;
 
