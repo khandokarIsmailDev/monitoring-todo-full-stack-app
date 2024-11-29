@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import { createTodo, getAllTodos } from "./controllers";
+import { createTodo, getAllTodos, updateTodo } from "./controllers";
 
 dotenv.config();
 
@@ -18,7 +18,7 @@ app.get("/health", (req, res) => {
 
 app.post("/todos", createTodo)
 app.get("/todos", getAllTodos)
-
+app.put("/todos", updateTodo)
 
 
 const port = process.env.PORT || 3000;
