@@ -9,7 +9,7 @@ export default function TodoAdd({onShowModal}) {
 
     <>
     <div className="mb-6 flex items-center justify-between">
-      <h2 className="text-2xl font-bold">Projectify</h2>
+      <h2 className="text-2xl font-bold ">Todo List Manager : <span className="text-red-500">1st Region</span></h2>
       <div className="flex space-x-2">
         <button
           onClick={() => onShowModal(true)}
