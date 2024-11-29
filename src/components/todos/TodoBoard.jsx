@@ -90,33 +90,49 @@ export default function TodoBoard() {
             </p>
           ) : (
             <>
-              {todoList.todo.length > 0 && (
+              {todoList.todo.length > 0 ? (
                 <Todo
                   tasks={todoList.todo}
                   onDeleteTask={handleDeleteTask}
                   onEditTask={handleEditTask}
                 />
+              ) : (
+                <p className="text-center text-xl font-bold  text-red-500 mx-auto">
+                  Todo List is empty!
+                </p>
               )}
-              {todoList.inprogress.length > 0 && (
+              {todoList.inprogress.length > 0 ? (
                 <OnProgress
                   tasks={todoList.inprogress}
                   onDeleteTask={handleDeleteTask}
                   onEditTask={handleEditTask}
                 />
+              ) : (
+                <p className="text-center text-xl font-bold  text-red-500 mx-auto">
+                  In Progress List is empty!
+                </p>
               )}
-              {todoList.done.length > 0 && (
+              {todoList.done.length > 0 ? (
                 <Done
                   tasks={todoList.done}
                   onDeleteTask={handleDeleteTask}
                   onEditTask={handleEditTask}
                 />
+              ) : (
+                <p className="text-center text-xl font-bold  text-red-500 mx-auto">
+                  Done List is empty!
+                </p>
               )}
-              {todoList.revised.length > 0 && (
+              {todoList.revised.length > 0 ? (
                 <Revised
                   tasks={todoList.revised}
                   onDeleteTask={handleDeleteTask}
                   onEditTask={handleEditTask}
                 />
+              ) : (
+                <p className="text-center text-xl font-bold  text-red-500 mx-auto">
+                  Revised List is empty!
+                </p>
               )}
             </>
           )}

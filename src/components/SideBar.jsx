@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/lws-logo-en.svg";
+import Logo from "../assets/lws-logo-en.png";
 
 export default function SideBar() {
   return (
