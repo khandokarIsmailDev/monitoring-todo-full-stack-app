@@ -14,3 +14,7 @@ export const UpdateTodoSchema = z.object({
     dueDate: z.string(),
     category: z.string(),
 })
+
+export const DeleteTodoSchema = z.object({
+    id: z.number(),
+})
