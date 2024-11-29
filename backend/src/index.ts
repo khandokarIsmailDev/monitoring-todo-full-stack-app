@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import { createTodo } from "./controllers";
+import { createTodo, getAllTodos } from "./controllers";
 
 dotenv.config();
 
@@ -17,6 +17,7 @@ app.get("/health", (req, res) => {
 });
 
 app.post("/todos", createTodo)
+app.get("/todos", getAllTodos)
 
 
 
