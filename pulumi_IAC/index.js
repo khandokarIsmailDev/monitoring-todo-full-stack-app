@@ -137,3 +137,111 @@ const privateRouteTableAssociationB = new aws.ec2.RouteTableAssociation("private
 
 
 exports.privateRouteTableId = privateRouteTable.id;
+
+
+// Create Security Group
+const publicSecurityGroup = new aws.ec2.SecurityGroup("public-secgrp",{
+    vpcId:vpc.id,
+    description:"Allow SSH for All Inbound Traffic",
+    ingress:[
+        {protocol:"tcp", fromPort:80, toPort:80, cidrBlocks:["0.0.0.0/0"]},
+        {protocol:"tcp", fromPort:22, toPort:22, cidrBlocks:["0.0.0.0/0"]},
+        {protocol:"tcp", fromPort:443, toPort:443, cidrBlocks:["0.0.0.0/0"]},
+    ],
+    egress:[
+        {protocol:"-1", fromPort:-1, toPort:-1, cidrBlocks:["0.0.0.0/0"]},
+    ]
+})
+
+//use the specific Ubuntu 20.04 AMI
+const amiId = "ami-047126e50991d067b"
+
+
+//create an ec2 instance in the public subnet
+const publicInstance = new aws.ec2.Instance("nginx-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds: [publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:publicSubnet.id,
+    keyName:"MyKeyPair",
+    associatePublicIpAddress:true,
+    tags:{
+        Name:"nginx-instance"
+    }
+})
+
+exports.publicInstanceId = publicInstance.id;
+exports.publicInstancePublicIp = publicInstance.publicIp;
+
+
+//create an Database instance in the private subnet
+const dbInstance = new aws.ec2.Instance("db-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds: [publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnet.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"db-instance"
+    }
+})
+
+exports.dbInstanceId = dbInstance.id;
+
+//create an Node-1 instance in the private subnet
+const node1Instance = new aws.ec2.Instance("node-1-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnet.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"node-1-instance"
+    }
+})
+
+exports.node1InstanceId = node1Instance.id;
+
+
+//create an Node-2 instance in the private subnet
+const node2Instance = new aws.ec2.Instance("node-2-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnet.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"node-2-instance"
+    }
+})
+
+exports.node2InstanceId = node2Instance.id;
+
+
+//create an Node-3 instance in the private subnet
+const node3Instance = new aws.ec2.Instance("node-3-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnet.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"node-3-instance"
+    }
+})
+
+exports.node3InstanceId = node3Instance.id;
+
+//create an Node-4 instance in the private subnet
+const node4Instance = new aws.ec2.Instance("node-4-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnet.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"node-4-instance"
+    }
+})
+
+exports.node4InstanceId = node4Instance.id;
