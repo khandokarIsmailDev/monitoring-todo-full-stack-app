@@ -60,10 +60,22 @@ export default function TodoBoard() {
     setTodoList(categoriyTask);
   }, [state.todoAll, search]);
 
-  function handleDeleteTask(taskId) {
+  async function handleDeleteTask(taskId) {
     const deleteTodo = state.todoAll.filter((task) => task.id !== taskId);
     dispatch({ type: "SET_TODO_ALL", payload: deleteTodo });
-    toast.success("Task deleted successfully.");
+    const response = await fetch(`http://localhost:3000/todos`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: taskId })
+    });
+
+    if (!response.ok) {
+      // Handle error response
+      const errorData = await response.json();
+      console.error('Error deleting task:', errorData);
+      toast.error("Failed to delete task.");
+      return;
+    }
   }
 
   function handleEditTask(task) {
