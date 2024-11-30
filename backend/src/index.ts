@@ -1,8 +1,10 @@
+import "./tracing";
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
 import { createTodo, deleteTodo, getAllTodos, updateTodo } from "./controllers";
+
 
 dotenv.config();
 

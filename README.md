@@ -1,6 +1,11 @@
 
 
+# OpenTelemetry Tracing Implementation
 
+install the dependencies:
+```bash
+npm i @opentelemetry/sdk-node @opentelemetry/exporter-otlp-grpc @opentelemetry/auto-instrumentations-node 
+```
 
 
 
