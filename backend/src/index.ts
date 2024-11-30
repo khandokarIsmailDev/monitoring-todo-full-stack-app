@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
+import cors from "cors";
 import { createTodo, deleteTodo, getAllTodos, updateTodo } from "./controllers";
 
 dotenv.config();
@@ -10,7 +11,7 @@ const app = express();
 // Middleware
 app.use(morgan("dev"));
 app.use(express.json());
-
+app.use(cors());
 // Routes
 app.get("/health", (req, res) => {
   res.send("Server is healthy");

@@ -7,11 +7,15 @@ import Revised from "./Revised";
 import Modal from "./Modal";
 import { TodoContext, SearchContext } from "../../context";
 import { toast } from "react-toastify";
+// import {someTask} from "../../data/some-task";
 
 export default function TodoBoard() {
   const [showModal, setShowModal] = useState(false);
   const { state, dispatch } = useContext(TodoContext);
   const { search } = useContext(SearchContext);
+
+  // console.log("this is state", state.todoAll);
+  // console.log("this is someTask", someTask);
 
   const [todoList, setTodoList] = useState({
     todo: [],
@@ -67,7 +71,7 @@ export default function TodoBoard() {
     setEditTask(task);
   }
 
-  // console.log("this is todoList", todoList);
+  console.log("this is todoList", todoList);
   // console.log("this is todoAll for context", todoAll);
   return (
     <>
