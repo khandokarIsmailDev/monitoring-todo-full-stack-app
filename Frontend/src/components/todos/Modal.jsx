@@ -41,7 +41,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
     });
   }
 
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault();
     
     // Validation: Check if any field is empty
@@ -52,9 +52,23 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
 
     if(editTask){
       dispatch({type:"EDIT_TASK",payload:task});
+      const response = await fetch(`http://localhost:3000/todos`,{
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(task)
+      })
+      const data = await response.json();
+      console.log('this is data from modal',data);
       toast.success("Task updated successfully.");
     }else{
       dispatch({type:"SET_TODO_ALL",payload:[...state.todoAll,task]})
+      const response = await fetch("http://localhost:3000/todos",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(task)
+      })
+      const data = await response.json();
+      console.log('this is data from modal',data);
       toast.success("Task created successfully.");
     }
     setEditTask(null);
