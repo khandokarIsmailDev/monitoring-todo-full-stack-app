@@ -24,7 +24,7 @@ app.get("/todos", getAllTodos)
 app.put("/todos", updateTodo)
 app.delete("/todos", deleteTodo)
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4100;
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
