@@ -1,4 +1,182 @@
 
+# Backend Application
+
+## Description
+This is a backend application built with Node.js, Express, and TypeScript. It provides a RESTful API for managing a to-do list, including functionalities to create, read, update, and delete to-do items. The application is instrumented with OpenTelemetry for observability.
+
+## Table of Contents
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Docker Setup](#docker-setup)
+- [Deployment](#deployment)
+- [Environment Variables](#environment-variables)
+- [License](#license)
+
+## Features
+- RESTful API for managing to-do items
+- Health check endpoint
+- OpenTelemetry integration for monitoring
+- CORS support
+- Logging with Morgan
+
+## Technologies
+- Node.js
+- Express
+- TypeScript
+- PostgreSQL
+- OpenTelemetry
+- Docker
+- Prisma
+
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/khandokarIsmailDev/todo-porject-frontend_backend
+   cd todo-porject-frontend_backend
+   cd backend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Set up your PostgreSQL database and update the `.env` file with your database connection string.
+
+## Usage
+To run the application in development mode, use the following command:
+
+
+The application will be available at `http://localhost:4100`.
+
+### API Endpoints
+- `GET /health`: Check if the server is running.
+- `POST /todos`: Create a new to-do item.
+- `GET /todos`: Retrieve all to-do items.
+- `PUT /todos`: Update an existing to-do item.
+- `DELETE /todos`: Delete a to-do item.
+
+## Docker Setup
+To build and run the application using Docker, follow these steps:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t your-dockerhub-username/backend:latest .
+   ```
+
+2. Run the Docker container:
+   ```bash
+   docker run -p 3000:3000 --env-file .env your-dockerhub-username/backend:latest
+   ```
+
+## Deployment
+To deploy the application to Docker Hub and AWS, follow these steps:
+
+1. **Push to Docker Hub**:
+   ```bash
+   docker push your-dockerhub-username/backend:latest
+   ```
+
+2. **Deploy on AWS**:
+   - **ECS**: Create a new ECS cluster and define a task definition using your Docker image.
+   - **Elastic Beanstalk**: Create a new Elastic Beanstalk application and specify your Docker image from Docker Hub.
+
+## Environment Variables
+The application requires the following environment variables, which can be set in a `.env` file:
+
+
+
+
+# Frontend Application
+
+# Projectify
+
+Projectify is a task management application built with React. It allows users to manage their tasks by categorizing them into different states: Todo, In Progress, Done, and Revised. The application utilizes React Context for state management and integrates with a backend API for data persistence.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Components](#components)
+- [Reducers](#reducers)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Features
+
+- Add, edit, and delete tasks
+- Categorize tasks into different states
+- Search functionality to filter tasks
+- Responsive design
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/projectify.git
+   cd projectify
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:3000`.
+
+## Usage
+
+- **Adding Tasks**: Use the "Add Task" button to open a modal and enter your task details.
+- **Editing Tasks**: Click on a task to edit its details.
+- **Deleting Tasks**: Click the delete button on a task to remove it from the list.
+- **Searching Tasks**: Use the search bar to filter tasks by name.
+
+## Components
+
+### TodoBoard
+
+The main component that displays the task lists. It categorizes tasks into four sections: Todo, In Progress, Done, and Revised. It also handles the modal for adding and editing tasks.
+
+- **State Management**: Uses `useContext` to access the global state from `TodoContext` and `SearchContext`.
+- **Task Categorization**: Uses `useEffect` to filter and categorize tasks based on the search input.
+
+### TodoAdd
+
+A component for adding new tasks. It opens a modal where users can input task details.
+
+### Todo
+
+Displays the list of tasks in the Todo category. It allows users to delete or edit tasks.
+
+### OnProgress, Done, Revised
+
+These components display tasks in their respective categories, similar to the Todo component.
+
+### Modal
+
+A reusable modal component for adding and editing tasks.
+
+## Reducers
+
+### TodoReducer
+
+The reducer manages the state of tasks. It handles the following actions:
+
+- **SET_TODO_ALL**: Sets the entire list of tasks.
+- **EDIT_TASK**: Edits a specific task based on its ID.
+
+
+
+
+
 
 # OpenTelemetry Tracing Implementation
 
