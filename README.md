@@ -145,7 +145,7 @@ docker run -d -e VITE_BACKEND_URL=http://localhost:4100 -p 80:80 --name frontend
 ```
 
 ```bash
-docker run -d -e DATABASE_URL="postgresql://avnadmin:AVNS_CGNOShqKyekuJCPSRH4@pg-191501c4-mssumaya20211-90d3.e.aivencloud.com:27958/defaultdb?sslmode=require" -p 4100:4100 --name backend-todo backend-todo
+docker run -d -e DATABASE_URL="postgresql://avnadmin:AVNS_CGNOShqKyekuJCPSRH4@pg-191501c4-mssumaya20211-90d3.e.aivencloud.com:27958/defaultdb?sslmode=require" -p 4100:4100 --name backend-todo ismailkhandokar/backend-todo:latest
 ```
 
 
@@ -248,7 +248,7 @@ Before you begin, ensure you have the following installed:
 
 4. **Create a key pair:**
    ```bash
-   aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text MyKeyPair.pem
+   aws ec2 create-key-pair --key-name MyKeyPair --query 'KeyMaterial' --output text > MyKeyPair.pem
    ```
 
 5. **Preview the changes:**

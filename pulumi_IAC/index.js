@@ -149,7 +149,7 @@ const publicSecurityGroup = new aws.ec2.SecurityGroup("public-secgrp",{
         {protocol:"tcp", fromPort:443, toPort:443, cidrBlocks:["0.0.0.0/0"]},
     ],
     egress:[
-        {protocol:"-1", fromPort:-1, toPort:-1, cidrBlocks:["0.0.0.0/0"]},
+        {protocol:"-1", fromPort:0, toPort:0, cidrBlocks:["0.0.0.0/0"]},
     ]
 })
 
