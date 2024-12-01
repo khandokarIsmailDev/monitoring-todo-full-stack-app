@@ -52,7 +52,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
 
     if(editTask){
       dispatch({type:"EDIT_TASK",payload:task});
-      const response = await fetch(`http://localhost:3000/todos`,{
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(task)
@@ -62,7 +62,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
       toast.success("Task updated successfully.");
     }else{
       dispatch({type:"SET_TODO_ALL",payload:[...state.todoAll,task]})
-      const response = await fetch("http://localhost:3000/todos",{
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(task)

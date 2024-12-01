@@ -139,6 +139,16 @@ Projectify is a task management application built with React. It allows users to
 - **Deleting Tasks**: Click the delete button on a task to remove it from the list.
 - **Searching Tasks**: Use the search bar to filter tasks by name.
 
+## Docker Setup/Example
+```bash
+docker run -d -e VITE_BACKEND_URL=http://localhost:4100 -p 80:80 --name frontend-react ismailkhandokar/frontend-todo:latest
+```
+
+```bash
+docker run -d -e DATABASE_URL="postgresql://avnadmin:AVNS_CGNOShqKyekuJCPSRH4@pg-191501c4-mssumaya20211-90d3.e.aivencloud.com:27958/defaultdb?sslmode=require" -p 4100:4100 --name backend-todo backend-todo
+```
+
+
 ## Components
 
 ### TodoBoard

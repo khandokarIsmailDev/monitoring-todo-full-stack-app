@@ -63,11 +63,13 @@ export default function TodoBoard() {
   async function handleDeleteTask(taskId) {
     const deleteTodo = state.todoAll.filter((task) => task.id !== taskId);
     dispatch({ type: "SET_TODO_ALL", payload: deleteTodo });
-    const response = await fetch(`http://localhost:3000/todos`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: taskId })
     });
+
+    toast.success("Task deleted successfully.");
 
     if (!response.ok) {
       // Handle error response

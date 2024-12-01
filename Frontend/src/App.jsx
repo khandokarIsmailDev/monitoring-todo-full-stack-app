@@ -12,9 +12,12 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/todos");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`);
+        if (!response.ok) {
+          console.error('Response:', await response.text());
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        console.log(data.todos);
         dispatch({ type: 'SET_TODO_ALL', payload: data.todos });
       } catch (error) {
         console.error("Error fetching data:", error);
