@@ -1,20 +1,20 @@
-# Stage 1: Build the application
-FROM node:22-alpine AS build
+FROM node:alpine as build
+WORKDIR /app
+COPY package.json .
+COPY . .
+RUN npm install
+RUN npm run build
 
-WORKDIR /app 
-
-COPY package*.json ./
-RUN npm install 
-
-COPY . . 
-
-RUN npm run build 
-
-# Stage 2: Serve the application with NGINX
-FROM nginx:alpine 
-
+FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 80 
+# Create config template
+RUN echo '{"VITE_BACKEND_URL": "${VITE_BACKEND_URL}"}' > /usr/share/nginx/html/config.template.json
 
-CMD ["nginx", "-g", "daemon off;"]
+# Create env substitution script
+RUN echo '#!/bin/sh' > /docker-entrypoint.d/40-substitute-env.sh && \
+    echo 'envsubst < /usr/share/nginx/html/config.template.json > /usr/share/nginx/html/config.json' >> /docker-entrypoint.d/40-substitute-env.sh && \
+    chmod +x /docker-entrypoint.d/40-substitute-env.sh
+
+# Nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf

@@ -1,6 +1,6 @@
-upstream backend {
-    server backend:3000;
-    server backend:4100;
+upstream nodje_react {
+    server 10.0.2.140:80;
+    server 10.0.2.188:80;
 }
 
 server{
