@@ -1,12 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import prisma from "../prisma";
 import { UpdateTodoSchema } from "../schemas";
+import { trace } from "../trace";
 
 export const updateTodo = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
+  const span = trace.getTracer("todo-service").startSpan("updateTodo")
+  console.log("span started", span)
   try {
     //validate request body
     const parsedBody = UpdateTodoSchema.safeParse(req.body);
@@ -32,7 +35,11 @@ export const updateTodo = async (
     });
     return;
   } catch (err) {
+    span.recordException(err as Error)
     next(err);
+  }finally{
+    span.end()
+    console.log("span ended", span)
   }
 };
 

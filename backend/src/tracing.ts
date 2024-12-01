@@ -6,7 +6,7 @@ import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions"
 
 const resource = Resource.default().merge(
     new Resource({
-        [SemanticResourceAttributes.SERVICE_NAME]: 'user-service'
+        [SemanticResourceAttributes.SERVICE_NAME]: 'todo-service'
     })
 )
 
