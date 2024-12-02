@@ -19,7 +19,7 @@ export default function App() {
           const configResponse = await fetch('/config.json');
           const config = await configResponse.json();
           if (config.VITE_BACKEND_URL) {
-            backendUrl = config.VITE_BACKEND_URL;
+            backendUrl = config.VITE_BACKEND_URL; 
           }
         } catch (configError) {
           console.warn('Could not load config.json, using env variable');

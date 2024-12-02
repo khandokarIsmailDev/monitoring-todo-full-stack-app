@@ -61,9 +61,22 @@ export default function TodoBoard() {
   }, [state.todoAll, search]);
 
   async function handleDeleteTask(taskId) {
+    // Fetch backend URL from config.json
+    let backendUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    try {
+      const configResponse = await fetch('/config.json');
+      const config = await configResponse.json();
+      if (config.VITE_BACKEND_URL) {
+        backendUrl = config.VITE_BACKEND_URL; 
+      }
+    } catch (configError) {
+      console.warn('Could not load config.json, using env variable');
+    }
+
     const deleteTodo = state.todoAll.filter((task) => task.id !== taskId);
     dispatch({ type: "SET_TODO_ALL", payload: deleteTodo });
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`, {
+    const response = await fetch(`${backendUrl}/todos`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: taskId })

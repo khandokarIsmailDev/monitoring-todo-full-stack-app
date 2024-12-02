@@ -1,3 +1,18 @@
+# Problem Statement
+
+ ## `.env` file is not working in the frontend application. so i have to use `config.json` file to load the backend url. and Create `Nginx` file to serve the frontend application and `config.json` file.
+ 
+  - security group e `4100` allow korsi
+  - Ensure that the firewall on the host allows traffic on port 4100
+  ```bash
+  sudo ufw status
+  sudo ufw allow 4100
+  ```
+  - forntedn and backend host is in same instance; but private instance; so er jonno amader `Nginx` server e backend & forntend 2 takei Load balancer hisabe save korte hobe. orthat frontend docker run korar somoy `docker run -d -e VITE_BACKEND_URL=http://172.17.0.2:4100 -p 80:80 --name frontend-reacts ismailkhandokar/frontend-todo:latest` ai VITE_BACKEND_URL e backend er ip address dile kaj korbe na; tai `Nginx` default configuration e `server 12.0.2.182:4100; # Backend server` sate kore disi; akhon amra frontend docker run korar somoy env hisabe `<nginx-public-ip>/api` dile backend er ip address load hobe. er mane 
+  ```bash
+  docker run -d -e VITE_BACKEND_URL=http://<nginx-public-ip>/api -p 80:80 --name frontend-reacts ismailkhandokar/frontend-todo:latest
+  ```
+
 
 # Backend Application
 

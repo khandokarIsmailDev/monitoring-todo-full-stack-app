@@ -9,7 +9,6 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
   const {state,dispatch} = useContext(TodoContext);
 
   const [task, setTask] = useState(editTask || {
-    id:crypto.randomUUID(),
     taskName: "",
     description: "",
     dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -44,6 +43,19 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
   async function handleSubmit(e){
     e.preventDefault();
     
+    // Fetch backend URL from config.json
+    let backendUrl = import.meta.env.VITE_BACKEND_URL;
+    
+    try {
+      const configResponse = await fetch('/config.json');
+      const config = await configResponse.json();
+      if (config.VITE_BACKEND_URL) {
+        backendUrl = config.VITE_BACKEND_URL; 
+      }
+    } catch (configError) {
+      console.warn('Could not load config.json, using env variable');
+    }
+
     // Validation: Check if any field is empty
     if (!task.taskName || !task.description || !task.dueDate || !task.category) {
         toast.error("Please fill in all fields.");
@@ -52,7 +64,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
 
     if(editTask){
       dispatch({type:"EDIT_TASK",payload:task});
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`,{
+      const response = await fetch(`${backendUrl}/todos`,{
         method:"PUT",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(task)
@@ -62,7 +74,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
       toast.success("Task updated successfully.");
     }else{
       dispatch({type:"SET_TODO_ALL",payload:[...state.todoAll,task]})
-      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`,{
+      const response = await fetch(`${backendUrl}/todos`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify(task)
