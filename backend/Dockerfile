@@ -17,5 +17,5 @@ COPY . .
 # Expose the application port
 EXPOSE 4100
 
-# Use an entrypoint script for dynamic Prisma generation and app start
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+# Entrypoint script modify kora
+CMD ["sh", "-c", "DATABASE_URL=${DATABASE_URL} npx prisma generate && npm run dev"]
