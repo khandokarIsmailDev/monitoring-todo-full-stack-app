@@ -13,6 +13,41 @@
   docker run -d -e VITE_BACKEND_URL=http://<nginx-public-ip>/api -p 80:80 --name frontend-reacts ismailkhandokar/frontend-todo:latest
   ```
 
+  ## Backend and Databse separate private instance
+   - in Security group e `4100, 5432` port allow korsi
+   ### Database: 
+   - first run docker compose file
+   ```bash
+   docker compose up -d
+   ```
+   - Ensure the client has psql or any PostgreSQL-compatible client installed. For example, to install the psql client
+   ```bash
+   sudo apt update && sudo apt install postgresql-client -y
+   ```
+   - Use psql to connect to the default postgres database: (for testing purpose)
+   ```bash
+   psql postgresql://postgres:postgres@12.0.137.111:5432/postgres
+   ```
+
+   ### Backend:
+   - run backend docker image
+   ```bash
+   sudo docker run -d -e DATABASE_URL=postgresql://postgres:postgres@12.0.137.111:5432/my_db -p 4100:4100  --name test-backend ismailkhandokar/backend-todo
+   ```
+   - but we connect with new database(another private instance); so now we `exec` in interactive mode; 
+   - we use alpine version so we use `sh` instead of `bash`
+   ```bash
+   sudo docker exec -it test-backend /bin/sh
+   ```
+   - nstall Node.js and npm (if not already installed)
+   ```bash
+   apk update
+   apk add --no-cache nodejs npm
+   ```
+   - then we run this command to generate database schema
+   ```bash
+   npx prisma migrate dev --name init
+   ```
 
 # Backend Application
 
