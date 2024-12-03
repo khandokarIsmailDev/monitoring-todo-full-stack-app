@@ -2,6 +2,7 @@ import React, { useState,useContext } from "react";
 import { TodoContext } from "../../context";
 import { formatDateToYYYYMMDD } from "../../utils/timeFormat";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from 'uuid';
 
 
 export default function Modal({onShowModal,editTask,setEditTask}) {
@@ -9,7 +10,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
   const {state,dispatch} = useContext(TodoContext);
 
   const [task, setTask] = useState(editTask || {
-    id:crypto.randomUUID(),
+    id: uuidv4(),
     taskName: "",
     description: "",
     dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
