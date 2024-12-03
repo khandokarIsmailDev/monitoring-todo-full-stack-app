@@ -66,6 +66,8 @@ const privateSubnetC = new aws.ec2.Subnet("c-private-subnet",{
 })
 
 exports.privateSubnetCId = privateSubnetC.id;
+
+
 //create Internet Gateway
 const igw = new aws.ec2.InternetGateway("my-IGW",{
     vpcId:vpc.id,
@@ -137,12 +139,17 @@ const privateRoute = new aws.ec2.Route("nat-route",{
 
 //associate the private route table with the private subnet
 const privateRouteTableAssociationA = new aws.ec2.RouteTableAssociation("private-RT-association-A", {
-    subnetId: privateSubnet.id,
+    subnetId: privateSubnetA.id,
     routeTableId: privateRouteTable.id,
 });
 
 const privateRouteTableAssociationB = new aws.ec2.RouteTableAssociation("private-RT-association-B", {
     subnetId: privateSubnetB.id,
+    routeTableId: privateRouteTable.id,
+});
+
+const privateRouteTableAssociationC = new aws.ec2.RouteTableAssociation("private-RT-association-C", {
+    subnetId: privateSubnetC.id,
     routeTableId: privateRouteTable.id,
 });
 
