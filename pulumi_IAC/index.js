@@ -28,8 +28,8 @@ const publicSubnet = new aws.ec2.Subnet("my-public-subnet",{
 
 exports.publicSubnetId = publicSubnet.id
 
-//create Private Subnet
-const privateSubnet = new aws.ec2.Subnet("my-private-subnet",{
+//create Private Subnet for ap-southeast-1a
+const privateSubnetA = new aws.ec2.Subnet("my-private-subnet",{
     vpcId:vpc.id,
     cidrBlock:"10.0.2.0/24",
     availabilityZone:"ap-southeast-1a",
@@ -38,7 +38,7 @@ const privateSubnet = new aws.ec2.Subnet("my-private-subnet",{
     }
 })
 
-exports.privateSubnetId = privateSubnet.id;
+exports.privateSubnetAId = privateSubnetA.id;
 
 
 
@@ -55,6 +55,17 @@ const privateSubnetB = new aws.ec2.Subnet("b-private-subnet",{
 
 exports.privateSubnetBId = privateSubnetB.id;
 
+//-----------create Private Subnet for ap-southeast-1c-----------
+const privateSubnetC = new aws.ec2.Subnet("c-private-subnet",{
+    vpcId:vpc.id,
+    cidrBlock:"10.0.5.0/24",
+    availabilityZone:"ap-southeast-1c",
+    tags:{
+        Name:"c-private-subnet"
+    }
+})
+
+exports.privateSubnetCId = privateSubnetC.id;
 //create Internet Gateway
 const igw = new aws.ec2.InternetGateway("my-IGW",{
     vpcId:vpc.id,
@@ -147,6 +158,8 @@ const publicSecurityGroup = new aws.ec2.SecurityGroup("public-secgrp",{
         {protocol:"tcp", fromPort:80, toPort:80, cidrBlocks:["0.0.0.0/0"]},
         {protocol:"tcp", fromPort:22, toPort:22, cidrBlocks:["0.0.0.0/0"]},
         {protocol:"tcp", fromPort:443, toPort:443, cidrBlocks:["0.0.0.0/0"]},
+        {protocol:"tcp", fromPort:4100, toPort:4100, cidrBlocks:["0.0.0.0/0"]},
+        {protocol:"tcp", fromPort:5432, toPort:5432, cidrBlocks:["0.0.0.0/0"]},
     ],
     egress:[
         {protocol:"-1", fromPort:0, toPort:0, cidrBlocks:["0.0.0.0/0"]},
@@ -179,7 +192,7 @@ const dbInstance = new aws.ec2.Instance("db-instance",{
     instanceType:"t2.micro",
     vpcSecurityGroupIds: [publicSecurityGroup.id],
     ami:amiId,
-    subnetId:privateSubnet.id,
+    subnetId:privateSubnetC.id,
     keyName:"MyKeyPair",
     tags:{
         Name:"db-instance"
@@ -189,59 +202,87 @@ const dbInstance = new aws.ec2.Instance("db-instance",{
 exports.dbInstanceId = dbInstance.id;
 
 //create an Node-1 instance in the private subnet
-const node1Instance = new aws.ec2.Instance("node-1-instance",{
+const frontendOneInstance = new aws.ec2.Instance("frontend-1-instance",{
     instanceType:"t2.micro",
     vpcSecurityGroupIds:[publicSecurityGroup.id],
     ami:amiId,
-    subnetId:privateSubnet.id,
+    subnetId:privateSubnetA.id,
     keyName:"MyKeyPair",
     tags:{
-        Name:"node-1-instance"
+        Name:"frontend-1-instance"
     }
 })
 
-exports.node1InstanceId = node1Instance.id;
+exports.frontendOneInstanceId = frontendOneInstance.id;
 
 
 //create an Node-2 instance in the private subnet
-const node2Instance = new aws.ec2.Instance("node-2-instance",{
+const frontendTwoInstance = new aws.ec2.Instance("frontend-2-instance",{
     instanceType:"t2.micro",
     vpcSecurityGroupIds:[publicSecurityGroup.id],
     ami:amiId,
-    subnetId:privateSubnet.id,
+    subnetId:privateSubnetB.id,
     keyName:"MyKeyPair",
     tags:{
-        Name:"node-2-instance"
+        Name:"frontend-2-instance"
     }
 })
 
-exports.node2InstanceId = node2Instance.id;
+exports.frontendTwoInstanceId = frontendTwoInstance.id;
 
 
 //create an Node-3 instance in the private subnet
-const node3Instance = new aws.ec2.Instance("node-3-instance",{
+const frontendThreeInstance = new aws.ec2.Instance("frontend-3-instance",{
     instanceType:"t2.micro",
     vpcSecurityGroupIds:[publicSecurityGroup.id],
     ami:amiId,
-    subnetId:privateSubnet.id,
+    subnetId:privateSubnetC.id,
     keyName:"MyKeyPair",
     tags:{
-        Name:"node-3-instance"
+        Name:"frontend-3-instance"
     }
 })
 
-exports.node3InstanceId = node3Instance.id;
+exports.frontendThreeInstanceId = frontendThreeInstance.id;
 
 //create an Node-4 instance in the private subnet
-const node4Instance = new aws.ec2.Instance("node-4-instance",{
+const backendOneInstance = new aws.ec2.Instance("backend-1-instance",{
     instanceType:"t2.micro",
     vpcSecurityGroupIds:[publicSecurityGroup.id],
     ami:amiId,
-    subnetId:privateSubnet.id,
+    subnetId:privateSubnetA.id,
     keyName:"MyKeyPair",
     tags:{
-        Name:"node-4-instance"
+        Name:"backend-1-instance"
     }
 })
 
-exports.node4InstanceId = node4Instance.id;
+exports.backendOneInstanceId = backendOneInstance.id;
+
+//create an Node-5 instance in the private subnet
+const backendTwoInstance = new aws.ec2.Instance("backend-2-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnetB.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"backend-2-instance"
+    }
+})
+
+exports.backendTwoInstanceId = backendTwoInstance.id;
+
+//create an Node-6 instance in the private subnet
+const backendThreeInstance = new aws.ec2.Instance("backend-3-instance",{
+    instanceType:"t2.micro",
+    vpcSecurityGroupIds:[publicSecurityGroup.id],
+    ami:amiId,
+    subnetId:privateSubnetC.id,
+    keyName:"MyKeyPair",
+    tags:{
+        Name:"backend-3-instance"
+    }
+})
+
+exports.backendThreeInstanceId = backendThreeInstance.id;
