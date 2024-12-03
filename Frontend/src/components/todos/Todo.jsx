@@ -5,6 +5,8 @@ export default function Todo({ tasks, onDeleteTask, onEditTask }) {
   const [sortTask, setSortTask] = useState([]);
   const [intialNumber, setIntialNumber] = useState(0);
 
+  console.log("sortTask", sortTask);
+
   useEffect(() => {
     const sortedTask = [...tasks].sort(
       (a, b) => new Date(b.dueDate) - new Date(a.dueDate)

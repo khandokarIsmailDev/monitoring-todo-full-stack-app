@@ -19,7 +19,7 @@ export const deleteTodo = async (req: Request, res: Response, next: NextFunction
 
     const deletedTodo = await prisma.todo.delete({
       where: {
-        id: parsedBody.data.id,
+        id: String(parsedBody.data.id),
       },
     });
 

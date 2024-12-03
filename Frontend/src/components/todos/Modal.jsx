@@ -9,6 +9,7 @@ export default function Modal({onShowModal,editTask,setEditTask}) {
   const {state,dispatch} = useContext(TodoContext);
 
   const [task, setTask] = useState(editTask || {
+    id:crypto.randomUUID(),
     taskName: "",
     description: "",
     dueDate: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
