@@ -3,6 +3,9 @@
 - I also create a video when i deploy this project;
 - [Awesome Screenshot Video](https://www.awesomescreenshot.com/video/34263092?key=6c512163cdf1d068b125b75449bb041c)
 
+# Project Structure
+![Project Structure](./src1.png)
+
 # Problem Statement
 
  ## `.env` file is not working in the frontend application. so i have to use `config.json` file to load the backend url. and Create `Nginx` file to serve the frontend application and `config.json` file.
